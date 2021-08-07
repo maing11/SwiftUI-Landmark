@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LandmarkList: View {
     
-    @State private var showFavoritesOnly = true
+    @State private var showFavoritesOnly = false
     
     var filterLandmarks: [Landmark] {
         landmarks.filter { landmark in
@@ -20,16 +20,22 @@ struct LandmarkList: View {
     var body: some View {
         //Embed the dynamically generated list of landmarks in a NavigationView.
         NavigationView {
-            List(filterLandmarks) {landmark in
-                //, wrap the returned row in a NavigationLink, specifying the LandmarkDetail view as the destination.
-                NavigationLink(
-                    destination: LandmarkDetail(landmark: landmark)) {
-                    LandmarkRow(landmark: landmark)
+            List {
+                Toggle(isOn: $showFavoritesOnly) {
+                    Text("Favorites only")
                 }
                 
+                ForEach(filterLandmarks) {landmark in
+                    //, wrap the returned row in a NavigationLink, specifying the LandmarkDetail view as the destination.
+                    NavigationLink(
+                        destination: LandmarkDetail(landmark: landmark)) {
+                        LandmarkRow(landmark: landmark)
+                    }
+                    
+                }
+
+                .navigationTitle("Landmarks")
             }
-            //set the title of the navigation bar when displaying the list.
-            .navigationTitle("Landmarks")
         }
         
     }
