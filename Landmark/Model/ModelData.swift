@@ -8,6 +8,11 @@
 import Foundation
 
 
+final class ModelData: ObservableObject {
+    @Published var landmarks: [Landmark] = load("landmarkData.json")
+}
+
+
 var landmarks: [Landmark] = load("landmarkData.json")
 // Load method that fetches JSON data with a given name from the app's main bundle
 func load<T: Decodable>(_ filename: String) -> T {
